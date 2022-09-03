@@ -12,10 +12,10 @@ error_chain! {
      }
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
-    let target = "https://github.com/minetest/minetest/releases/download/5.6.0/minetest-5.6.0-win64.zip";
-    let response = reqwest::get(target).await?;
+async fn download_and_unzip(string url, string target)-> Result<()>{
+    
+    //let target = "https://github.com/minetest/minetest/releases/download/5.6.0/minetest-5.6.0-win64.zip";
+    let response = reqwest::get(url).await?;
 
     let path = Path::new("./download1.zip");
 
@@ -33,7 +33,13 @@ async fn main() -> Result<()> {
 
     zip_extensions::read::zip_extract(
         &PathBuf::from("./download1.zip"),
-        &PathBuf::from("./target1"),
+        &PathBuf::from("./target"),
     );
+    Ok(());
+
+}
+#[tokio::main]
+async fn main() -> Result<()> {
+    
     Ok(())
 }
